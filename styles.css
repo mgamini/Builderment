@@ -313,11 +313,29 @@ button:hover {
 
 .plusMinus {
   display: flex;
-  width: 15px;
+  width: 20px;
   height: 70px;
   border: none;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
+}
+
+.icoPlusMinus {
+  height: 20px;
+  width: 20px;
+  background-size: contain;
+  background-position: center center;
+  background-color: transparent;
+  background-repeat: no-repeat;
+}
+
+.plusMinus.icoMinus > .icoPlusMinus {
+  background-image: url("/image/Minus_Sign.png");
+}
+
+.plusMinus.icoPlus > .icoPlusMinus {
+  background-image: url("/image/Plus_Sign.png");
 }
 
 .matDetail {
@@ -481,23 +499,6 @@ button:hover {
   justify-content: center;
 }
 
-.icoPlusMinus {
-  height: 15px;
-  width: 15px;
-  background-size: contain;
-  background-position: center center;
-  background-color: transparent;
-  background-repeat: no-repeat;
-}
-
-.plusMinus.icoMinus > .icoPlusMinus {
-  background-image: url("/image/Minus_Sign.png");
-}
-
-.plusMinus.icoPlus > .icoPlusMinus {
-  background-image: url("/image/Plus_Sign.png");
-}
-
 @media screen and (max-width: 800px) {
   .mainbox {
     flex-direction: column;
@@ -540,4 +541,50 @@ button:hover {
   .tablecell {
     width: 60px;
   }
+}
+
+#detailsPanel {
+  display: flex;
+  position: fixed;
+  bottom: 0px;
+  left: 0px;
+  width: 100%;
+}
+
+.detailsTab {
+  background-color: white;
+  width: 100%;
+  padding: 5px 10px;
+  box-shadow: 0px 0px 10px 0px #999;
+}
+
+.detailsCollapsed .detailsContent {
+  display: none;
+}
+
+.detailsTitleRow {
+  display: flex;
+}
+
+.detailsTitle {
+  flex-grow: 1;
+  text-align: center;
+}
+
+.detailsVisibilityButton {
+  padding: 5px 20px;
+  font-weight: bold;
+  border: 0px;
+}
+
+.detailsVisibilityButton:disabled {
+  background-color: #999;
+  cursor: auto;
+}
+
+.detailsCollapsed .detailsVisibilityButton:before {
+  content: "^";
+  padding-right: 10px;
+  position: relative;
+  top: 2px;
 }

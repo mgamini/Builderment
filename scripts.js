@@ -8,6 +8,7 @@ const DOM = {
   tierBox: document.getElementById("tierButtonBox"),
   totalsBox: document.getElementById("totalsBox"),
   limitBox: document.getElementById("limit_resource"),
+  detailsPanel: document.getElementById("detailsPanel"),
 };
 
 const CONSTANTS = {
@@ -164,12 +165,16 @@ class ReverseCalculation extends Calculation {
 
 class Branch {
   constructor(
-    { children, factory, factoryCount, name, rate, slug },
+    details,
     branches,
     parent,
     level = 0,
-    branchType = "null"
+    branchType = "null",
+    branchClickHandler
   ) {
+    this.details = details;
+    const { children, factory, factoryCount, name, rate, slug } = details;
+
     this.DOM = {
       parent: parent,
       container: document.querySelector("#branchTemplate").cloneNode(true),
@@ -252,6 +257,8 @@ class Branch {
     this.DOM.plusMinus.classList.add("icoPlus");
     this.expanded = false;
   }
+
+  select() {}
 }
 
 class Leaf {
