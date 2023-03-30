@@ -76,7 +76,12 @@ class Calculation {
   buildTree() {
     this.DOM.container.innerHTML = "";
 
-    new Branch(this.tree, this.branches, this.DOM.container);
+    new Branch(
+      this.tree,
+      this.branches,
+      this.DOM.container,
+      this.onBranchClick.bind(this)
+    );
     this.DOM.container.style.display = "flex";
   }
 
@@ -110,6 +115,10 @@ class Calculation {
     }
 
     this.DOM.totalsBox.style.display = "flex";
+  }
+
+  onBranchClick(branch) {
+    console.log(this, branch);
   }
 
   onTierButtonClick(showLevel) {
@@ -168,12 +177,14 @@ class Branch {
     details,
     branches,
     parent,
+    branchClickHandler,
     level = 0,
-    branchType = "null",
-    branchClickHandler
+    branchType = "null"
   ) {
     this.details = details;
     const { children, factory, factoryCount, name, rate, slug } = details;
+
+    this.branchClickHandler = branchClickHandler;
 
     this.DOM = {
       parent: parent,
@@ -200,7 +211,9 @@ class Branch {
     } else {
       this.DOM.plusMinus.classList.add("icoMinus");
 
-      this.leaf.DOM.container.addEventListener("click", this.toggle.bind(this));
+      this.leaf.DOM.container.addEventListener("click", () =>
+        this.branchClickHandler(this)
+      );
       this.DOM.plusMinus.addEventListener("click", this.toggle.bind(this));
 
       this.children = children.map((details, idx, all) => {
@@ -220,7 +233,14 @@ class Branch {
           branchType = "middle";
         }
 
-        new Branch(details, branches, this.DOM.children, level + 1, branchType);
+        new Branch(
+          details,
+          branches,
+          this.DOM.children,
+          branchClickHandler,
+          level + 1,
+          branchType
+        );
       });
     }
 
@@ -258,7 +278,9 @@ class Branch {
     this.expanded = false;
   }
 
-  select() {}
+  select() {
+    this.branchClickHandler(this);
+  }
 }
 
 class Leaf {
